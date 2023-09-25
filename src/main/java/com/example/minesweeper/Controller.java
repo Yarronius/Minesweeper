@@ -2,6 +2,7 @@ package com.example.minesweeper;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -23,17 +24,31 @@ public class Controller {
            Rectangle rect = (Rectangle) view.getChildren().get(i);
            Text text = (Text) view.getChildren().get(i + 1);
            rect.setOnMouseClicked(event -> {
-               if(!isGameStarted) {
-                   while (model.getGameField()[x][y].isMined()) {
-                       model.setOnMines();
-                   }
-                   isGameStarted = true;
+               if (event.getButton() == MouseButton.PRIMARY) {
+                    /*if(model.getGameField()[x][y].isMined() && !isGameStarted) {
+                        while (model.getGameField()[x][y].isMined()) {
+                            model.setOnMines();
+                        }
+                        isGameStarted = true;
+                    }*/
+                    model.countNeighborMines();
+                    if (model.getGameField()[x][y].isMarked()) return;
+                    if(model.getGameField()[x][y].isMined()) {
+                        view.gameOver(model.getGameField());
+                    }
+                    if(model.getGameField()[x][y].getMinedNeighborsCount() == 0 && !model.getGameField()[x][y].isMarked()) {
+                        model.openTileAndCheckNeighbor(x, y);
+
+                    } else {
+                        model.getGameField()[x][y].setOpen(true);
+                    }
+
+               } else if (event.getButton() == MouseButton.SECONDARY && !model.getGameField()[x][y].isOpen()) {
+                   model.getGameField()[x][y].setMarked(!model.getGameField()[x][y].isMarked());
                }
-               rect.setFill(Color.AQUA);
-               text.setVisible(true);
+               view.draw(model.getGameField());
            });
        }
    }
-
 }
 

@@ -16,6 +16,7 @@ public class MinesweeperGame extends Application {
         View view = new View();
         view.initialize();
         Model model = new Model();
+        model.setOnMines();
         Controller controller = new Controller(view, model);
         controller.setOnMouseControl();
         Scene scene = new Scene(view);

@@ -1,6 +1,5 @@
 package com.example.minesweeper;
 
-import java.util.Random;
 
 public class Model {
     private Tile[][] gameField;

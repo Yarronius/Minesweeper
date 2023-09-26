@@ -18,7 +18,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class View extends GridPane {
+    private Button button1 = new Button("Новая игра");
+    private Button button2 = new Button("Закрыть программу");
+    private Stage stage;
+
     public void initialize() {
+        this.getChildren().clear();
+        this.getColumnConstraints().clear();
+        this.getRowConstraints().clear();
+        stage = new Stage();
+
         for(int i = 0; i < 9; i++) {
             ColumnConstraints col = new ColumnConstraints(50);
             RowConstraints row = new RowConstraints(50);
@@ -40,27 +49,22 @@ public class View extends GridPane {
         }
     }
 
-    public void gameOver(Tile[][] gameField) {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                gameField[i][j].setOpen(true);
+    public void endOfGame(Tile[][] gameField, String result) {
+        if(result.equals("проиграли")) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if(gameField[i][j].isMined()) gameField[i][j].setOpen(true);
+                }
             }
         }
         this.draw(gameField);
-        Button button1 = new Button("Новая игра");
-        button1.setOnMouseClicked(event -> {
-
-        });
-        Button button2 = new Button("Закрыть программу");
         button2.setAlignment(Pos.BOTTOM_CENTER);
-        button2.setOnMouseClicked(event -> {System.exit(0);});
         VBox pane = new VBox();
         pane.setAlignment(Pos.CENTER);
         pane.setSpacing(10);
         pane.getChildren().addAll(button1, button2);
         Scene scene = new Scene(pane, 250, 100);
-        Stage stage = new Stage();
-        stage.setTitle("Вы проиграли!");
+        stage.setTitle("Вы " + result +"!");
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
@@ -97,5 +101,17 @@ public class View extends GridPane {
                 }
             }
         }
+    }
+
+    public Button getButton1() {
+        return button1;
+    }
+
+    public Button getButton2() {
+        return button2;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

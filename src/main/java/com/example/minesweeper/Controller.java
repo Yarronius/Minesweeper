@@ -31,16 +31,19 @@ public class Controller {
                         }
                         isGameStarted = true;
                     }*/
-                    model.countNeighborMines();
+
                     if (model.getGameField()[x][y].isMarked()) return;
                     if(model.getGameField()[x][y].isMined()) {
-                        view.gameOver(model.getGameField());
+                        view.endOfGame(model.getGameField(), "проиграли");
                     }
                     if(model.getGameField()[x][y].getMinedNeighborsCount() == 0 && !model.getGameField()[x][y].isMarked()) {
                         model.openTileAndCheckNeighbor(x, y);
 
                     } else {
                         model.getGameField()[x][y].setOpen(true);
+                    }
+                    if (model.getMineCount() == model.closeTileCount()) {
+                        view.endOfGame(model.getGameField(), "выиграли");
                     }
 
                } else if (event.getButton() == MouseButton.SECONDARY && !model.getGameField()[x][y].isOpen()) {
@@ -49,6 +52,24 @@ public class Controller {
                view.draw(model.getGameField());
            });
        }
+   }
+
+   public void setOnButtonControl() {
+       view.getButton1().setOnMouseClicked(event -> {
+            view.getStage().close();
+           initializeNewGame();
+       });
+
+       view.getButton2().setOnMouseClicked(event -> {System.exit(0);});
+   }
+
+   public void initializeNewGame() {
+       model = new Model();
+       model.setOnMines();
+       model.countNeighborMines();
+       view.initialize();
+       setOnMouseControl();
+       setOnButtonControl();
    }
 }
 

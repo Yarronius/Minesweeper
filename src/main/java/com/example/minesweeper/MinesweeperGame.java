@@ -14,11 +14,9 @@ public class MinesweeperGame extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         View view = new View();
-        view.initialize();
         Model model = new Model();
-        model.setOnMines();
         Controller controller = new Controller(view, model);
-        controller.setOnMouseControl();
+        controller.initializeNewGame();
         Scene scene = new Scene(view);
         stage.setTitle("Minesweeper");
         stage.setResizable(false);

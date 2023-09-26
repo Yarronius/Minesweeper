@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Model {
     private Tile[][] gameField;
+    private int mineCount = 0;
 
     public Model() {
         gameField = new Tile[9][9];
@@ -17,7 +18,10 @@ public class Model {
     public void setOnMines() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                gameField[i][j].setMined((!(Math.random() < 0.9)));
+                if(Math.random() > 0.9) {
+                    gameField[i][j].setMined(true);
+                    mineCount++;
+                }
             }
         }
     }
@@ -96,4 +100,20 @@ public class Model {
                 if(gameField[i][j + 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i, j + 1);
             }
         }
+
+        public int closeTileCount() {
+        int closeTileCount = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if(!gameField[i][j].isOpen()) {
+                    closeTileCount++;
+                }
+            }
+        }
+        return closeTileCount;
     }
+
+    public int getMineCount() {
+        return mineCount;
+    }
+}

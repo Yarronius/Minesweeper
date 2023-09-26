@@ -2,7 +2,6 @@ package com.example.minesweeper;
 
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 public class Controller {
     private View view;
@@ -33,7 +32,7 @@ public class Controller {
                     if(tile.isMined()) {
                         view.endOfGame(model.getGameField(), "проиграли");
                     }
-                    if(tile.getMinedNeighborsCount() == 0 && !tile.isMarked()) {
+                    if(tile.getMinedNeighborsCount() == 0) {
                         model.openTileAndCheckNeighbor(x, y);
 
                     } else {
@@ -52,11 +51,13 @@ public class Controller {
    }
 
    public void setOnButtonControl() {
-       view.getButton1().setOnMouseClicked(event -> {
+       view.getNewGameButton().setOnMouseClicked(event -> {
             view.getStage().close();
            initializeNewGame();
        });
-       view.getButton2().setOnMouseClicked(event -> {System.exit(0);});
+       view.getExitButton().setOnMouseClicked(event -> {
+           System.exit(0);
+       });
    }
 
    public void initializeNewGame() {

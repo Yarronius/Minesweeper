@@ -13,33 +13,33 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class View extends GridPane {
-    private Button button1 = new Button("Новая игра");
-    private Button button2 = new Button("Закрыть программу");
+    private Button newGameButton = new Button("Новая игра");
+    private Button exitButton = new Button("Закрыть программу");
     private Stage stage;
 
     public void initialize() {
-        this.getChildren().clear();
-        this.getColumnConstraints().clear();
-        this.getRowConstraints().clear();
+        getChildren().clear();
+        getColumnConstraints().clear();
+        getRowConstraints().clear();
         stage = new Stage();
 
         for(int i = 0; i < 9; i++) {
             ColumnConstraints col = new ColumnConstraints(50);
             RowConstraints row = new RowConstraints(50);
-            this.getColumnConstraints().add(col);
-            this.getRowConstraints().add(row);
+            getColumnConstraints().add(col);
+            getRowConstraints().add(row);
         }
 
-        for (int i = 0; i < this.getColumnCount(); i++) {
-            for (int j = 0; j < this.getRowCount(); j++) {
+        for (int i = 0; i < getColumnCount(); i++) {
+            for (int j = 0; j < getRowCount(); j++) {
                 Rectangle rect = new Rectangle(50, 50, Color.GRAY);
                 Text text = new Text("");
                 text.setFont(new Font("Arial", 48));
                 text.setVisible(false);
                 rect.setStroke(Color.BLACK);
                 text.setTranslateX(10);
-                this.add(rect, i, j);
-                this.add(text, i, j);
+                add(rect, i, j);
+                add(text, i, j);
             }
         }
     }
@@ -52,12 +52,12 @@ public class View extends GridPane {
                 }
             }
         }
-        this.draw(gameField);
-        button2.setAlignment(Pos.BOTTOM_CENTER);
+        draw(gameField);
+        exitButton.setAlignment(Pos.BOTTOM_CENTER);
         VBox pane = new VBox();
         pane.setAlignment(Pos.CENTER);
         pane.setSpacing(10);
-        pane.getChildren().addAll(button1, button2);
+        pane.getChildren().addAll(newGameButton, exitButton);
         Scene scene = new Scene(pane, 250, 100);
         stage.setTitle("Вы " + result +"!");
         stage.setScene(scene);
@@ -98,12 +98,12 @@ public class View extends GridPane {
         }
     }
 
-    public Button getButton1() {
-        return button1;
+    public Button getNewGameButton() {
+        return newGameButton;
     }
 
-    public Button getButton2() {
-        return button2;
+    public Button getExitButton() {
+        return exitButton;
     }
 
     public Stage getStage() {

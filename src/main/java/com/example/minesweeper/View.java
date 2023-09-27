@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class View extends GridPane {
     private Button newGameButton = new Button("Начать игру");
@@ -67,7 +68,11 @@ public class View extends GridPane {
         stage.setTitle(massage);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setX(485);
+        stage.setOnCloseRequest(event -> System.exit(0));
+        stage.setResizable(false);
+        Scene scene1 = this.getScene();
+        Window window = scene1.getWindow();
+        stage.setX(485 + (window.getWidth()/2 - 144));
         stage.show();
     }
 

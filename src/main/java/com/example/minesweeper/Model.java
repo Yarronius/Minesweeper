@@ -3,7 +3,7 @@ package com.example.minesweeper;
 
 public class Model {
     private Tile[][] gameField;
-    private int mineCount = 0;
+    private int minesCount = 0;
 
     public Model() {
         gameField = new Tile[9][9];
@@ -19,11 +19,21 @@ public class Model {
             for (int j = 0; j < 9; j++) {
                 if(Math.random() > 0.9) {
                     gameField[i][j].setMined(true);
-                    mineCount++;
+                    minesCount++;
                 }
             }
         }
     }
+
+    public void resetTiles() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                gameField[i][j].setMarked(false);
+                gameField[i][j].setOpen(false);
+                gameField[i][j].setMined(false);
+                }
+            }
+        }
 
     public Tile[][] getGameField() {
         return gameField;
@@ -100,19 +110,19 @@ public class Model {
             }
         }
 
-        public int closeTileCount() {
-        int closeTileCount = 0;
+        public int closedTileCount() {
+        int closedTileCount = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if(!gameField[i][j].isOpen()) {
-                    closeTileCount++;
+                    closedTileCount++;
                 }
             }
         }
-        return closeTileCount;
+        return closedTileCount;
     }
 
-    public int getMineCount() {
-        return mineCount;
+    public int getMinesCount() {
+        return minesCount;
     }
 }

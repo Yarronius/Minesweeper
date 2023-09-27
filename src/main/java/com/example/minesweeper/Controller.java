@@ -24,21 +24,22 @@ public class Controller {
                     if (tile.isMarked()) return;
                     if(tile.isMined() && !isGameStarted) {
                         while (tile.isMined()) {
+                            model.resetTiles();
                             model.setOnMines();
+                            model.countNeighborMines();
                         }
-                        isGameStarted = true;
                     }
+                   isGameStarted = true;
 
                     if(tile.isMined()) {
                         view.endOfGame(model.getGameField(), "проиграли");
                     }
                     if(tile.getMinedNeighborsCount() == 0) {
                         model.openTileAndCheckNeighbor(x, y);
-
                     } else {
                         tile.setOpen(true);
                     }
-                    if (model.getMineCount() == model.closeTileCount()) {
+                    if (model.getMinesCount() == model.closedTileCount()) {
                         view.endOfGame(model.getGameField(), "выиграли");
                     }
 

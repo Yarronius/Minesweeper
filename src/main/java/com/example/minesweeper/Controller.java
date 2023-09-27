@@ -20,7 +20,6 @@ public class Controller {
            int y = (i/2) % model.getHeight();
            Tile tile = model.getGameField()[x][y];
            Rectangle rect = (Rectangle) view.getChildren().get(i);
-           System.out.println("" + rect + (++count));
            rect.setOnMouseClicked(event -> {
                if (event.getButton() == MouseButton.PRIMARY) {
                     if (tile.isMarked()) return;
@@ -61,14 +60,11 @@ public class Controller {
        view.getExitButton().setOnMouseClicked(event -> {
            System.exit(0);
        });
-       view.getAmateur().selectedProperty().addListener(observable -> {
-
-       });
    }
 
    public void initializeNewGame() {
        isGameStarted = false;
-       model = new Model(19, 19);
+       model = new Model(9, 9);
        model.setOnMines();
        model.countNeighborMines();
        view.initialize(model.getGameField());

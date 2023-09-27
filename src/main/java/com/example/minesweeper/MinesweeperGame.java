@@ -9,7 +9,7 @@ public class MinesweeperGame extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         View view = new View();
-        Model model = new Model(19, 19);
+        Model model = new Model(9, 9);
         Controller controller = new Controller(view, model);
         controller.initializeNewGame();
         Scene scene = new Scene(view);
@@ -17,7 +17,6 @@ public class MinesweeperGame extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        view.showDialogMenu("Выберите режим игры");
     }
 
     public static void main(String[] args) {

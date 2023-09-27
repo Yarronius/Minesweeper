@@ -1,11 +1,8 @@
 package com.example.minesweeper;
 
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -19,9 +16,6 @@ public class View extends GridPane {
     private Button newGameButton = new Button("Новая игра");
     private Button exitButton = new Button("Закрыть программу");
     private Stage stage;
-    private RadioButton newer = new RadioButton("Новичок");
-    private RadioButton amateur = new RadioButton("Любитель");
-    private RadioButton professional = new RadioButton("Профессионал");
 
     public void initialize(Tile[][] gameField) {
         getChildren().clear();
@@ -55,18 +49,12 @@ public class View extends GridPane {
         VBox pane = new VBox();
         pane.setAlignment(Pos.CENTER);
         pane.setSpacing(10);
-        ToggleGroup group = new ToggleGroup();
-        newer.setToggleGroup(group);
-        amateur.setToggleGroup(group);
-        professional.setToggleGroup(group);
-        newer.setTranslateX(-17);
-        amateur.setTranslateX(-13);
-        pane.getChildren().addAll(newer, amateur, professional, newGameButton, exitButton);
-        group.selectToggle(newer);
-        Scene scene = new Scene(pane, 250, 200);
+        pane.getChildren().addAll(newGameButton, exitButton);
+        Scene scene = new Scene(pane, 300, 150);
         stage.setTitle(massage);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOnCloseRequest(event -> System.exit(0));
         stage.show();
     }
 
@@ -125,17 +113,5 @@ public class View extends GridPane {
 
     public Stage getStage() {
         return stage;
-    }
-
-    public RadioButton getNewer() {
-        return newer;
-    }
-
-    public RadioButton getAmateur() {
-        return amateur;
-    }
-
-    public RadioButton getProfessional() {
-        return professional;
     }
 }

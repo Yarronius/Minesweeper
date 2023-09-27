@@ -14,11 +14,13 @@ public class Controller {
    }
 
    public void setOnMouseControl() {
-       for(int i = 0; i < 162; i+=2) {
-           int x = (i/2) / 9;
-           int y = (i/2) % 9;
+       int count = 0;
+       for(int i = 0; i < model.getHeight() * model.getHeight() * 2; i+=2) {
+           int x = (i/2) / model.getHeight();
+           int y = (i/2) % model.getHeight();
            Tile tile = model.getGameField()[x][y];
            Rectangle rect = (Rectangle) view.getChildren().get(i);
+           System.out.println("" + rect + (++count));
            rect.setOnMouseClicked(event -> {
                if (event.getButton() == MouseButton.PRIMARY) {
                     if (tile.isMarked()) return;
@@ -32,7 +34,7 @@ public class Controller {
                    isGameStarted = true;
 
                     if(tile.isMined()) {
-                        view.endOfGame(model.getGameField(), "проиграли");
+                        view.endOfGame(model.getGameField(), "Вы проиграли!");
                     }
                     if(tile.getMinedNeighborsCount() == 0) {
                         model.openTileAndCheckNeighbor(x, y);
@@ -40,7 +42,7 @@ public class Controller {
                         tile.setOpen(true);
                     }
                     if (model.getMinesCount() == model.closedTileCount()) {
-                        view.endOfGame(model.getGameField(), "выиграли");
+                        view.endOfGame(model.getGameField(), "Вы выиграли!");
                     }
 
                } else if (event.getButton() == MouseButton.SECONDARY && !tile.isOpen()) {
@@ -53,20 +55,23 @@ public class Controller {
 
    public void setOnButtonControl() {
        view.getNewGameButton().setOnMouseClicked(event -> {
-            view.getStage().close();
+           view.getStage().close();
            initializeNewGame();
        });
        view.getExitButton().setOnMouseClicked(event -> {
            System.exit(0);
        });
+       view.getAmateur().selectedProperty().addListener(observable -> {
+
+       });
    }
 
    public void initializeNewGame() {
        isGameStarted = false;
-       model = new Model();
+       model = new Model(19, 19);
        model.setOnMines();
        model.countNeighborMines();
-       view.initialize();
+       view.initialize(model.getGameField());
        setOnMouseControl();
        setOnButtonControl();
    }

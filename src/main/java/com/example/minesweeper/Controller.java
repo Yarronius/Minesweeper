@@ -73,9 +73,17 @@ public class Controller {
                initializeNewGame(9, 9);
                window.setHeight(310);
                window.setWidth(287);
+           } else if (view.getCustom().isSelected()) {
+               initializeNewGame(view.getComboBoxWidth().getValue(), view.getComboBoxHeight().getValue());
+               window.setHeight(view.getComboBoxWidth().getValue() * 30 + 40);
+               window.setWidth(view.getComboBoxHeight().getValue() * 30 + 17);
            }
-
        });
+       view.getCustom().selectedProperty().addListener((observable, oldValue, newValue) -> {
+           view.getComboBoxHeight().disableProperty().setValue(oldValue);
+           view.getComboBoxWidth().disableProperty().setValue(oldValue);
+       });
+
        view.getExitButton().setOnMouseClicked(event -> {
            System.exit(0);
        });

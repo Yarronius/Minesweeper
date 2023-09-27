@@ -2,9 +2,7 @@ package com.example.minesweeper;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -13,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 public class View extends GridPane {
     private Button newGameButton = new Button("Начать игру");
@@ -21,6 +20,9 @@ public class View extends GridPane {
     private RadioButton newer = new RadioButton("Новичок");
     private RadioButton amateur = new RadioButton("Любитель");
     private RadioButton professional = new RadioButton("Профессионал");
+    private RadioButton custom = new RadioButton("Установить размер:");
+    private ComboBox<Integer> comboBoxWidth = new ComboBox<Integer>();;
+    private ComboBox<Integer> comboBoxHeight = new ComboBox<Integer>();
 
     public void initialize(Tile[][] gameField) {
         getChildren().clear();
@@ -55,15 +57,39 @@ public class View extends GridPane {
         VBox pane = new VBox();
         pane.setAlignment(Pos.CENTER);
         pane.setSpacing(10);
+
         ToggleGroup group = new ToggleGroup();
         newer.setToggleGroup(group);
         amateur.setToggleGroup(group);
         professional.setToggleGroup(group);
+        custom.setToggleGroup(group);
         newer.setTranslateX(-17);
         amateur.setTranslateX(-13);
-        pane.getChildren().addAll(newer, amateur, professional, newGameButton, exitButton);
+        HBox hBox1 = new HBox();
+        hBox1.setAlignment(Pos.CENTER);
+        HBox hBox2 = new HBox();
+        hBox2.setAlignment(Pos.CENTER);
+
+        comboBoxWidth.disableProperty().setValue(true);
+        comboBoxWidth.getItems().addAll(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30);
+        comboBoxWidth.getSelectionModel().selectFirst();
+        comboBoxWidth.setConverter(new IntegerStringConverter());
+        comboBoxWidth.setPrefWidth(50.0);
+        Text textWidth = new Text("Ширина:  ");
+        Text textHeight = new Text("Высота:    ");
+
+        comboBoxHeight.disableProperty().setValue(true);
+        comboBoxHeight.getItems().addAll(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30);
+        comboBoxHeight.getSelectionModel().selectFirst();
+        comboBoxHeight.setConverter(new IntegerStringConverter());
+        comboBoxHeight.setPrefWidth(50.0);
+
+        hBox1.getChildren().addAll(textWidth, comboBoxWidth);
+        hBox2.getChildren().addAll(textHeight, comboBoxHeight);
+
+        pane.getChildren().addAll(newer, amateur, professional, custom, hBox1, hBox2, newGameButton, exitButton);
         group.selectToggle(newer);
-        Scene scene = new Scene(pane, 300, 200);
+        Scene scene = new Scene(pane, 300, 250);
         stage.setTitle(massage);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -140,5 +166,17 @@ public class View extends GridPane {
 
     public RadioButton getProfessional() {
         return professional;
+    }
+
+    public RadioButton getCustom() {
+        return custom;
+    }
+
+    public ComboBox<Integer> getComboBoxWidth() {
+        return comboBoxWidth;
+    }
+
+    public ComboBox<Integer> getComboBoxHeight() {
+        return comboBoxHeight;
     }
 }

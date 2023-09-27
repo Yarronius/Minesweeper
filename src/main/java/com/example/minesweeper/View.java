@@ -93,6 +93,9 @@ public class View extends GridPane {
         stage.setTitle(massage);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOnCloseRequest(event -> {
+            System.exit(0);
+        });
         stage.setX(485);
         stage.show();
     }

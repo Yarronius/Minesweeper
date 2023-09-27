@@ -9,13 +9,15 @@ public class MinesweeperGame extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         View view = new View();
-        Model model = new Model(19, 19);
+
+        Model model = new Model(9, 9);
         Controller controller = new Controller(view, model);
-        controller.initializeNewGame();
+        controller.initializeNewGame(9, 9);
         Scene scene = new Scene(view);
         stage.setTitle("Minesweeper");
         stage.setResizable(false);
         stage.setScene(scene);
+        stage.setX(500);
         stage.show();
         view.showDialogMenu("Выберите режим игры");
     }

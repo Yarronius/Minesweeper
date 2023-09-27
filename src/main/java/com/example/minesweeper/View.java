@@ -16,7 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class View extends GridPane {
-    private Button newGameButton = new Button("Новая игра");
+    private Button newGameButton = new Button("Начать игру");
     private Button exitButton = new Button("Закрыть программу");
     private Stage stage;
     private RadioButton newer = new RadioButton("Новичок");
@@ -29,20 +29,21 @@ public class View extends GridPane {
         getRowConstraints().clear();
 
         for(int i = 0; i < gameField.length; i++) {
-            ColumnConstraints col = new ColumnConstraints(50);
-            RowConstraints row = new RowConstraints(50);
+            ColumnConstraints col = new ColumnConstraints(30);
+            RowConstraints row = new RowConstraints(30);
             getColumnConstraints().add(col);
             getRowConstraints().add(row);
         }
 
         for (int i = 0; i < getColumnCount(); i++) {
             for (int j = 0; j < getRowCount(); j++) {
-                Rectangle rect = new Rectangle(50, 50, Color.GRAY);
+                Rectangle rect = new Rectangle(30, 30, Color.GRAY);
                 Text text = new Text("");
-                text.setFont(new Font("Arial", 48));
+                text.setFont(new Font("Arial", 28));
                 text.setVisible(false);
                 rect.setStroke(Color.BLACK);
-                text.setTranslateX(10);
+                text.setTranslateX(7);
+                text.setTranslateY(2);
                 add(rect, i, j);
                 add(text, i, j);
             }
@@ -63,10 +64,11 @@ public class View extends GridPane {
         amateur.setTranslateX(-13);
         pane.getChildren().addAll(newer, amateur, professional, newGameButton, exitButton);
         group.selectToggle(newer);
-        Scene scene = new Scene(pane, 250, 200);
+        Scene scene = new Scene(pane, 300, 200);
         stage.setTitle(massage);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setX(485);
         stage.show();
     }
 
@@ -98,6 +100,9 @@ public class View extends GridPane {
                 }
                 if(gameField[i][j].isOpen() && gameField[i][j].isMined()) {
                     text.setText("\uD83D\uDCA3");
+                    text.setTranslateY(-1.5);
+                    //text.setTranslateX(0);
+                    text.setFont(new Font("Arial", 20));
                     text.fillProperty().setValue(Color.RED);
                     text.strokeProperty().setValue(Color.BLACK);
                     text.boundsTypeProperty().setValue(TextBoundsType.VISUAL);

@@ -1,7 +1,11 @@
 package com.example.minesweeper;
 
+import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
 
 public class Controller {
     private View view;
@@ -55,8 +59,23 @@ public class Controller {
 
    public void setOnButtonControl() {
        view.getNewGameButton().setOnMouseClicked(event -> {
+           Scene scene = view.getScene();
+           Window window = scene.getWindow();
            view.getStage().close();
-           initializeNewGame();
+           if(view.getAmateur().isSelected()) {
+               initializeNewGame(16, 16);
+               window.setHeight(520);
+               window.setWidth(497);
+           } else if (view.getProfessional().isSelected()) {
+               initializeNewGame(30, 30);
+               window.setHeight(940);
+               window.setWidth(917);
+           } else if (view.getNewer().isSelected()) {
+               initializeNewGame(9, 9);
+               window.setHeight(310);
+               window.setWidth(287);
+           }
+
        });
        view.getExitButton().setOnMouseClicked(event -> {
            System.exit(0);
@@ -66,9 +85,9 @@ public class Controller {
        });
    }
 
-   public void initializeNewGame() {
+   public void initializeNewGame(int width, int height) {
        isGameStarted = false;
-       model = new Model(19, 19);
+       model = new Model(width, height);
        model.setOnMines();
        model.countNeighborMines();
        view.initialize(model.getGameField());

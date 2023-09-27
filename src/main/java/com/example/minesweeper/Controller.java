@@ -15,9 +15,9 @@ public class Controller {
 
    public void setOnMouseControl() {
        int count = 0;
-       for(int i = 0; i < model.getHeight() * model.getHeight() * 2; i+=2) {
-           int x = (i/2) / model.getHeight();
-           int y = (i/2) % model.getHeight();
+       for(int i = 0; i < 9 * 9 * 2; i+=2) {
+           int x = (i/2) / 9;
+           int y = (i/2) % 9;
            Tile tile = model.getGameField()[x][y];
            Rectangle rect = (Rectangle) view.getChildren().get(i);
            rect.setOnMouseClicked(event -> {
@@ -64,7 +64,7 @@ public class Controller {
 
    public void initializeNewGame() {
        isGameStarted = false;
-       model = new Model(9, 9);
+       model = new Model();
        model.setOnMines();
        model.countNeighborMines();
        view.initialize(model.getGameField());

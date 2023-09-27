@@ -4,23 +4,19 @@ package com.example.minesweeper;
 public class Model {
     private Tile[][] gameField;
     private int minesCount = 0;
-    private int width;
-    private int height;
 
-    public Model(int width, int height) {
-        this.width = width;
-        this.height = height;
-        gameField = new Tile[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+    public Model() {
+        gameField = new Tile[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 gameField[i][j] = new Tile();
             }
         }
     }
 
     public void setOnMines() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 if(Math.random() > 0.9) {
                     gameField[i][j].setMined(true);
                     minesCount++;
@@ -30,8 +26,8 @@ public class Model {
     }
 
     public void resetTiles() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 gameField[i][j].setMarked(false);
                 gameField[i][j].setOpen(false);
                 gameField[i][j].setMined(false);
@@ -44,8 +40,8 @@ public class Model {
     }
 
     public void countNeighborMines() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 int count = 0;
                 if(!getGameField()[i][j].isMined()) {
                     if (i - 1 >= 0) {
@@ -54,22 +50,22 @@ public class Model {
                     if (i - 1 >= 0 && j - 1 >= 0) {
                         count += getGameField()[i - 1][j - 1].isMined() ? 1 : 0;
                     }
-                    if (i - 1 >= 0 && j + 1 < width) {
+                    if (i - 1 >= 0 && j + 1 < 9) {
                         count += getGameField()[i - 1][j + 1].isMined() ? 1 : 0;
                     }
-                    if (i + 1 < height) {
+                    if (i + 1 < 9) {
                         count += getGameField()[i + 1][j].isMined() ? 1 : 0;
                     }
-                    if (i + 1 < width && j + 1 < width) {
+                    if (i + 1 < 9 && j + 1 < 9) {
                         count += getGameField()[i + 1][j + 1].isMined() ? 1 : 0;
                     }
-                    if (i + 1 < height && j - 1 >= 0) {
+                    if (i + 1 < 9 && j - 1 >= 0) {
                         count += getGameField()[i + 1][j - 1].isMined() ? 1 : 0;
                     }
                     if (j - 1 >= 0) {
                         count += getGameField()[i][j - 1].isMined() ? 1 : 0;
                     }
-                    if (j + 1 < width) {
+                    if (j + 1 < 9) {
                         count += getGameField()[i][j + 1].isMined() ? 1 : 0;
                     }
                 }
@@ -88,19 +84,19 @@ public class Model {
                 gameField[i - 1][j - 1].setOpen(true);
                 if(gameField[i - 1][j - 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i - 1, j - 1);
             }
-            if (i - 1 >= 0 && j + 1 < width && !gameField[i - 1][j + 1].isOpen()) {
+            if (i - 1 >= 0 && j + 1 < 9 && !gameField[i - 1][j + 1].isOpen()) {
                 gameField[i - 1][j + 1].setOpen(true);
                 if(gameField[i - 1][j + 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i - 1, j + 1);
             }
-            if (i + 1 < height && !gameField[i + 1][j].isOpen()) {
+            if (i + 1 < 9 && !gameField[i + 1][j].isOpen()) {
                 gameField[i + 1][j].setOpen(true);
                 if(gameField[i + 1][j].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i + 1, j);
             }
-            if (i + 1 < height && j + 1 < width && !gameField[i + 1][j + 1].isOpen()) {
+            if (i + 1 < 9 && j + 1 < 9 && !gameField[i + 1][j + 1].isOpen()) {
                 gameField[i + 1][j + 1].setOpen(true);
                 if(gameField[i + 1][j + 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i + 1, j + 1);
             }
-            if (i + 1 < height && j - 1 >= 0 && !gameField[i + 1][j - 1].isOpen()) {
+            if (i + 1 < 9 && j - 1 >= 0 && !gameField[i + 1][j - 1].isOpen()) {
                 gameField[i + 1][j - 1].setOpen(true);
                 if(gameField[i + 1][j - 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i + 1, j - 1);
             }
@@ -108,7 +104,7 @@ public class Model {
                 gameField[i][j - 1].setOpen(true);
                 if(gameField[i][j - 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i , j - 1);
             }
-            if (j + 1 < width && !gameField[i][j + 1].isOpen()) {
+            if (j + 1 < 9 && !gameField[i][j + 1].isOpen()) {
                 gameField[i][j + 1].setOpen(true);
                 if(gameField[i][j + 1].getMinedNeighborsCount() == 0) openTileAndCheckNeighbor(i, j + 1);
             }
@@ -116,8 +112,8 @@ public class Model {
 
         public int closedTileCount() {
         int closedTileCount = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 if(!gameField[i][j].isOpen()) {
                     closedTileCount++;
                 }
@@ -128,13 +124,5 @@ public class Model {
 
     public int getMinesCount() {
         return minesCount;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 }

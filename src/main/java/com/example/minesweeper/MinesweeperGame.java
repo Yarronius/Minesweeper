@@ -9,7 +9,7 @@ public class MinesweeperGame extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         View view = new View();
-        Model model = new Model(9, 9);
+        Model model = new Model();
         Controller controller = new Controller(view, model);
         controller.initializeNewGame();
         Scene scene = new Scene(view);

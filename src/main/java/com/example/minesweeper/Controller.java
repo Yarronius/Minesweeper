@@ -3,7 +3,6 @@ package com.example.minesweeper;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 
@@ -79,9 +78,6 @@ public class Controller {
        });
        view.getExitButton().setOnMouseClicked(event -> {
            System.exit(0);
-       });
-       view.getAmateur().selectedProperty().addListener(observable -> {
-
        });
    }
 

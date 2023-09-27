@@ -1,7 +1,6 @@
 package com.example.minesweeper;
 
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
@@ -101,7 +100,6 @@ public class View extends GridPane {
                 if(gameField[i][j].isOpen() && gameField[i][j].isMined()) {
                     text.setText("\uD83D\uDCA3");
                     text.setTranslateY(-1.5);
-                    //text.setTranslateX(0);
                     text.setFont(new Font("Arial", 20));
                     text.fillProperty().setValue(Color.RED);
                     text.strokeProperty().setValue(Color.BLACK);

@@ -33,9 +33,11 @@ public class Controller {
                    isGameStarted = true;
 
                     if(tile.isMined()) {
+                        tile.setOpen(true);
+                        tile.setMarked(true);
                         view.endOfGame(model.getGameField(), "Вы проиграли!");
                     }
-                    if(tile.getMinedNeighborsCount() == 0) {
+                    if(tile.getMinedNeighborsCount() == 0 && !tile.isMined()) {
                         model.openTileAndCheckNeighbor(x, y);
                     } else {
                         tile.setOpen(true);

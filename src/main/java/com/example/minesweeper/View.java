@@ -90,6 +90,10 @@ public class View extends GridPane {
                     text.strokeProperty().setValue(Color.BLACK);
                     text.boundsTypeProperty().setValue(TextBoundsType.VISUAL);
                 }
+                if(gameField[i][j].isOpen() && gameField[i][j].isMined() && gameField[i][j].isMarked()) {
+                    rect.setFill(Color.RED);
+                    text.fillProperty().setValue(Color.BLACK);
+                }
                 if(gameField[i][j].isMarked() && !gameField[i][j].isOpen()) {
                     text.setText("\uD83D\uDEA9");
                     text.fillProperty().setValue(Color.RED);

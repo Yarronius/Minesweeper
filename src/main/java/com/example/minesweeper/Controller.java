@@ -39,15 +39,17 @@ public class Controller {
                        if(tile.isMined()) {
                            tile.setMarked(true);
                            tile.setOpen(true);
-                           view.endOfGame(model.getGameField(), "Вы проиграли!");
+                           model.endOfGame();
+                           view.draw(model.getGameField());
+                           view.showDialogMenu("Вы проиграли!");
                        }
-                       if(tile.getMinedNeighborsCount() == 0) {
+                       if(tile.getMinedNeighborsCount() == 0 && !tile.isMined()) {
                            model.openTileAndCheckNeighbor(x, y);
                        } else {
                            tile.setOpen(true);
                        }
                        if (model.getMinesCount() == model.closedTileCount()) {
-                           view.endOfGame(model.getGameField(), "Вы выиграли!");
+                           view.showDialogMenu("Вы выиграли!");
                        }
 
                    } else if (event.getButton() == MouseButton.SECONDARY && !tile.isOpen()) {
@@ -55,7 +57,6 @@ public class Controller {
                    }
                    view.draw(model.getGameField());
                });
-               System.out.println("x = " + x + " y = "+ y + "; " + rect + "слушатель установлен");
            }
        }
    }

@@ -39,6 +39,14 @@ public class Model {
             }
         }
 
+    public void endOfGame() {
+        for (int i = 0; i < gameField.length; i++) {
+            for (int j = 0; j < gameField[0].length; j++) {
+                if (gameField[i][j].isMined() && !gameField[i][j].isMarked()) gameField[i][j].setOpen(true);
+            }
+        }
+    }
+
     public Tile[][] getGameField() {
         return gameField;
     }

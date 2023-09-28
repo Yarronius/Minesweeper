@@ -29,11 +29,13 @@ public class View extends GridPane {
         getColumnConstraints().clear();
         getRowConstraints().clear();
 
+        for(int i = 0; i < gameField[0].length; i++) {
+            RowConstraints row = new RowConstraints(30);
+            getRowConstraints().add(row);
+        }
         for(int i = 0; i < gameField.length; i++) {
             ColumnConstraints col = new ColumnConstraints(30);
-            RowConstraints row = new RowConstraints(30);
             getColumnConstraints().add(col);
-            getRowConstraints().add(row);
         }
 
         for (int i = 0; i < getColumnCount(); i++) {
@@ -102,9 +104,9 @@ public class View extends GridPane {
 
     public void endOfGame(Tile[][] gameField, String massage) {
         if(massage.equals("Вы проиграли!")) {
-            for (int i = 0; i < gameField.length; i++) {
-                for (int j = 0; j < gameField[i].length; j++) {
-                    if(gameField[i][j].isMined()) gameField[i][j].setOpen(true);
+            for (int i = 0; i < getColumnCount(); i++) {
+                for (int j = 0; j <getRowCount(); j++) {
+                    if(gameField[i][j].isMined() && !gameField[i][j].isMarked()) gameField[i][j].setOpen(true);
                 }
             }
         }
@@ -113,11 +115,11 @@ public class View extends GridPane {
     }
 
     public void draw(Tile[][] gameField) {
-        for (int i = 0; i < gameField.length; i++) {
-            for (int j = 0; j < gameField[i].length; j++) {
-                int index = (i * gameField.length + j)  * 2;
-                Rectangle rect = (Rectangle) this.getChildren().get(index);
-                Text text = (Text) this.getChildren().get(index + 1);
+        int count = 0;
+        for (int i = 0; i < getColumnCount(); i++) {
+            for (int j = 0; j < getRowCount(); j++) {
+                Rectangle rect = (Rectangle) this.getChildren().get(count);
+                Text text = (Text) this.getChildren().get(count + 1);
                 if(gameField[i][j].isOpen()) {
                     rect.setFill(Color.ANTIQUEWHITE);
                     String neighborCount = gameField[i][j].getMinedNeighborsCount() > 0 ? String.valueOf(gameField[i][j].getMinedNeighborsCount()) : "";
@@ -143,6 +145,11 @@ public class View extends GridPane {
                 } else if(!gameField[i][j].isOpen()) {
                     text.setText("");
                 }
+                if(gameField[i][j].isMined() && gameField[i][j].isMarked() && gameField[i][j].isOpen()) {
+                    rect.setFill(Color.RED);
+                    text.fillProperty().setValue(Color.BLACK);
+                }
+                count += 2;
             }
         }
     }

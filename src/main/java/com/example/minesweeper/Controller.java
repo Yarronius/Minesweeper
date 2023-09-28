@@ -18,41 +18,45 @@ public class Controller {
 
    public void setOnMouseControl() {
        int count = 0;
-       for(int i = 0; i < model.getHeight() * model.getHeight() * 2; i+=2) {
-           int x = (i/2) / model.getHeight();
-           int y = (i/2) % model.getHeight();
-           Tile tile = model.getGameField()[x][y];
-           Rectangle rect = (Rectangle) view.getChildren().get(i);
-           System.out.println("" + rect + (++count));
-           rect.setOnMouseClicked(event -> {
-               if (event.getButton() == MouseButton.PRIMARY) {
-                    if (tile.isMarked()) return;
-                    if(tile.isMined() && !isGameStarted) {
-                        while (tile.isMined()) {
-                            model.resetTiles();
-                            model.setOnMines();
-                            model.countNeighborMines();
-                        }
-                    }
-                   isGameStarted = true;
+       for (int i = 0; i < model.getWidth(); i++) {
+           int x = i;
+           for (int j = 0; j < model.getHeight(); j++, count += 2) {
+               int y = j;
+               Tile tile = model.getGameField()[x][y];
+               Rectangle rect = (Rectangle) view.getChildren().get(count);
+               rect.setOnMouseClicked(event -> {
+                   if (event.getButton() == MouseButton.PRIMARY) {
+                       if (tile.isMarked()) return;
+                       if(tile.isMined() && !isGameStarted) {
+                           while (tile.isMined()) {
+                               model.resetTiles();
+                               model.setOnMines();
+                               model.countNeighborMines();
+                           }
+                       }
+                       isGameStarted = true;
 
-                    if(tile.isMined()) {
-                        view.endOfGame(model.getGameField(), "Вы проиграли!");
-                    }
-                    if(tile.getMinedNeighborsCount() == 0) {
-                        model.openTileAndCheckNeighbor(x, y);
-                    } else {
-                        tile.setOpen(true);
-                    }
-                    if (model.getMinesCount() == model.closedTileCount()) {
-                        view.endOfGame(model.getGameField(), "Вы выиграли!");
-                    }
+                       if(tile.isMined()) {
+                           tile.setMarked(true);
+                           tile.setOpen(true);
+                           view.endOfGame(model.getGameField(), "Вы проиграли!");
+                       }
+                       if(tile.getMinedNeighborsCount() == 0) {
+                           model.openTileAndCheckNeighbor(x, y);
+                       } else {
+                           tile.setOpen(true);
+                       }
+                       if (model.getMinesCount() == model.closedTileCount()) {
+                           view.endOfGame(model.getGameField(), "Вы выиграли!");
+                       }
 
-               } else if (event.getButton() == MouseButton.SECONDARY && !tile.isOpen()) {
-                   tile.setMarked(!tile.isMarked());
-               }
-               view.draw(model.getGameField());
-           });
+                   } else if (event.getButton() == MouseButton.SECONDARY && !tile.isOpen()) {
+                       tile.setMarked(!tile.isMarked());
+                   }
+                   view.draw(model.getGameField());
+               });
+               System.out.println("x = " + x + " y = "+ y + "; " + rect + "слушатель установлен");
+           }
        }
    }
 
@@ -75,8 +79,8 @@ public class Controller {
                window.setWidth(287);
            } else if (view.getCustom().isSelected()) {
                initializeNewGame(view.getComboBoxWidth().getValue(), view.getComboBoxHeight().getValue());
-               window.setHeight(view.getComboBoxWidth().getValue() * 30 + 40);
-               window.setWidth(view.getComboBoxHeight().getValue() * 30 + 17);
+               window.setHeight(view.getComboBoxHeight().getValue() * 30 + 40);
+               window.setWidth(view.getComboBoxWidth().getValue() * 30 + 17);
            }
        });
        view.getCustom().selectedProperty().addListener((observable, oldValue, newValue) -> {

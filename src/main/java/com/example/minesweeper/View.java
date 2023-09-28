@@ -80,7 +80,7 @@ public class View extends GridPane {
         if(massage.equals("Вы проиграли!")) {
             for (int i = 0; i < gameField.length; i++) {
                 for (int j = 0; j < gameField[i].length; j++) {
-                    if(gameField[i][j].isMined()) gameField[i][j].setOpen(true);
+                    if(gameField[i][j].isMined() && gameField[i][j].isMarked()) gameField[i][j].setOpen(true);
                 }
             }
         }
@@ -109,6 +109,10 @@ public class View extends GridPane {
                     text.fillProperty().setValue(Color.RED);
                     text.strokeProperty().setValue(Color.BLACK);
                     text.boundsTypeProperty().setValue(TextBoundsType.VISUAL);
+                }
+                if(gameField[i][j].isOpen() && gameField[i][j].isMined() && gameField[i][j].isMarked()) {
+                    rect.setFill(Color.RED);
+                    text.fillProperty().setValue(Color.BLACK);
                 }
                 if(gameField[i][j].isMarked() && !gameField[i][j].isOpen()) {
                     text.setText("\uD83D\uDEA9");

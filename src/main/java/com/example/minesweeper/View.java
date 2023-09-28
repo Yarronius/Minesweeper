@@ -80,7 +80,7 @@ public class View extends GridPane {
         if(massage.equals("Вы проиграли!")) {
             for (int i = 0; i < gameField.length; i++) {
                 for (int j = 0; j < gameField[i].length; j++) {
-                    if(gameField[i][j].isMined() && gameField[i][j].isMarked()) gameField[i][j].setOpen(true);
+                    if(gameField[i][j].isMined() && !gameField[i][j].isMarked()) gameField[i][j].setOpen(true);
                 }
             }
         }

@@ -74,7 +74,7 @@ public class View extends GridPane {
         comboBoxWidth.getItems().addAll(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30);
         comboBoxWidth.getSelectionModel().selectFirst();
         comboBoxWidth.setConverter(new IntegerStringConverter());
-        comboBoxWidth.setPrefWidth(50.0);
+        comboBoxWidth.setPrefWidth(55.0);
         Text textWidth = new Text("Ширина:  ");
         Text textHeight = new Text("Высота:    ");
 
@@ -82,7 +82,7 @@ public class View extends GridPane {
         comboBoxHeight.getItems().addAll(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30);
         comboBoxHeight.getSelectionModel().selectFirst();
         comboBoxHeight.setConverter(new IntegerStringConverter());
-        comboBoxHeight.setPrefWidth(50.0);
+        comboBoxHeight.setPrefWidth(55.0);
 
         hBox1.getChildren().addAll(textWidth, comboBoxWidth);
         hBox2.getChildren().addAll(textHeight, comboBoxHeight);
